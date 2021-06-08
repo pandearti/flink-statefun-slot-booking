@@ -1,10 +1,12 @@
 package state;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonCreator;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
+@NoArgsConstructor
 @Getter
 @Setter
 public class VaccineStock {
@@ -17,7 +19,6 @@ public class VaccineStock {
     @JsonProperty
     private long totalAvailable;
 
-    @JsonCreator
     public VaccineStock(String centerId, String vaccineType) {
         this.centerId = centerId;
         this.vaccineType = vaccineType;

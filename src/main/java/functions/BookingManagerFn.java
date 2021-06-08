@@ -9,9 +9,6 @@ import messages.VaccineBookingResponse;
 import org.apache.flink.statefun.sdk.java.*;
 import org.apache.flink.statefun.sdk.java.io.KafkaEgressMessage;
 import org.apache.flink.statefun.sdk.java.message.Message;
-import org.apache.flink.statefun.sdk.java.message.MessageBuilder;
-import state.VaccineStock;
-import utils.FunctionUtils;
 import utils.TypeUtils;
 
 import java.time.Instant;
@@ -26,10 +23,12 @@ public class BookingManagerFn implements StatefulFunction {
 
     public static final TypeName BOOKING_MANAGER_FN_TYPE = TypeName.typeNameOf(NAMESPACE, "bookingManagerFn");
 
-    public static final StatefulFunctionSpec SPEC = StatefulFunctionSpec.builder(BOOKING_MANAGER_FN_TYPE)
-            .withSupplier(BookingManagerFn::new).build();
-
     private static final ValueSpec<SlotBookedEvent> SLOT_BOOKED = ValueSpec.named("slotBooking").withCustomType(CustomTypes.SLOT_BOOKED);
+
+    public static final StatefulFunctionSpec SPEC = StatefulFunctionSpec.builder(BOOKING_MANAGER_FN_TYPE)
+            .withSupplier(BookingManagerFn::new)
+            .withValueSpec(SLOT_BOOKED)
+            .build();
 
     private static final TypeName KAFKA_EGRESS =
             TypeName.typeNameOf(NAMESPACE, "slot-booking-response");
@@ -47,8 +46,7 @@ public class BookingManagerFn implements StatefulFunction {
 
             sendMessageToTarget(context, SLOT_BOOKING_FN_TYPE, slotBookingEvent.getSlotId(),
                     SLOT_BOOKING_EVENT_TYPE, slotBookingEvent);
-        }
-        else if (argument.is(SLOT_BOOKING_RESPONSE_TYPE)) {
+        } else if (argument.is(SLOT_BOOKING_RESPONSE_TYPE)) {
             SlotBookingResponse response = argument.as(SLOT_BOOKING_RESPONSE_TYPE);
             if ("Success".equals(response.getBookingStatus())) {
                 String centerId = response.getCenterId();
@@ -69,8 +67,7 @@ public class BookingManagerFn implements StatefulFunction {
             } else {
                 // Slot Booking failed
             }
-        }
-        else if (argument.is(VACCINE_BOOKING_RESPONSE_TYPE)) {
+        } else if (argument.is(VACCINE_BOOKING_RESPONSE_TYPE)) {
             VaccineBookingResponse response = argument.as(VACCINE_BOOKING_RESPONSE_TYPE);
             if ("Success".equals(response.getStatus())) {
                 // TODO handle optional

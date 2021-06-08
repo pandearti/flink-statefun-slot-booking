@@ -1,11 +1,13 @@
 package events;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 
+@NoArgsConstructor
 @Setter
 @Getter
 public class SlotBookedEvent {
@@ -29,5 +31,4 @@ public class SlotBookedEvent {
 
     @JsonProperty
     private Instant bookingTimestamp;
-
 }

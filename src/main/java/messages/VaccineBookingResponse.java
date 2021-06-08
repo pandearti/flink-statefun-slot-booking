@@ -1,19 +1,21 @@
 package messages;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonCreator;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class VaccineBookingResponse {
 
-    @JsonProperty
+    @JsonProperty("status")
     private String status; // Success / Failed
 
-    public VaccineBookingResponse(String status) {
+    @JsonCreator
+    public VaccineBookingResponse(@JsonProperty("status") String status) {
         this.status = status;
     }
 }

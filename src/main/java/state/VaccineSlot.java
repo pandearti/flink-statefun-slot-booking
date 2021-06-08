@@ -1,14 +1,16 @@
 package state;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonCreator;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+@NoArgsConstructor
 @Getter
 @Setter
 public class VaccineSlot {

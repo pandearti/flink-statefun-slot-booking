@@ -1,20 +1,26 @@
 package events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonCreator;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@NoArgsConstructor
+@Setter
 @Getter
 public class SlotBookingEvent {
 
-    @JsonProperty
+    @JsonProperty("citizenId")
     private long citizenId;
 
-    @JsonProperty
+    @JsonProperty("slotId")
     private String slotId;
 
     @JsonCreator
-    public SlotBookingEvent(long citizenId, String slotId) {
+    public SlotBookingEvent(@JsonProperty("citizenId") long citizenId,
+                            @JsonProperty("slotId") String slotId) {
         this.citizenId = citizenId;
         this.slotId = slotId;
     }

@@ -1,3 +1,5 @@
+
+
 [
   { "userId": "Ashok", "message": "Hello World!!"},
 
@@ -5,6 +7,20 @@
     "kafka-producer1": "echo '1- \"userId\": \"Ashok\", \"message\": \"Hello World\"} ' | /usr/bin/kafka-console-producer --topic greet-input --broker-list kafka:9092 --property 'parse.key=true' --property 'key.separator=-'",
     "kafka-producer2": "/usr/bin/kafka-console-producer --topic greet-input --broker-list kafka:9092",
     "kafka-consumer": "/usr/bin/kafka-console-consumer --topic greet-response --bootstrap-server kafka:9092"
+  },
+
+  {
+    "kafka-producer1": "echo '1-{\"citizenId\": 1, \"slotId\": \"Slot-1\"} ' | /usr/bin/kafka-console-producer --topic slot-booking-event --broker-list kafka:9092 --property 'parse.key=true' --property 'key.separator=-'",
+
+    "kafka-producer1": "echo '2-{\"citizenId\": 2, \"slotId\": \"Slot-1\"} ' | /usr/bin/kafka-console-producer --topic slot-booking-event --broker-list kafka:9092 --property 'parse.key=true' --property 'key.separator=-'",
+
+    "kafka-producer1": "echo '3-{\"citizenId\": 3, \"slotId\": \"Slot-2\"} ' | /usr/bin/kafka-console-producer --topic slot-booking-event --broker-list kafka:9092 --property 'parse.key=true' --property 'key.separator=-'",
+
+    "kafka-producer1": "echo '4-{\"citizenId\": 4, \"slotId\": \"Slot-2\"} ' | /usr/bin/kafka-console-producer --topic slot-booking-event --broker-list kafka:9092 --property 'parse.key=true' --property 'key.separator=-'",
+
+    "kafka-producer1": "echo '6-{\"citizenId\": 6, \"slotId\": \"Slot-3\"} ' | /usr/bin/kafka-console-producer --topic slot-booking-event --broker-list kafka:9092 --property 'parse.key=true' --property 'key.separator=-'",
+
+    "kafka-consumer": "/usr/bin/kafka-console-consumer --topic slot-booking-response --bootstrap-server kafka:9092"
   }
 ]
 

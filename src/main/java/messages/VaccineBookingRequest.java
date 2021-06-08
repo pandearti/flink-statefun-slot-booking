@@ -1,20 +1,26 @@
 package messages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonCreator;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Setter
 @Getter
 public class VaccineBookingRequest {
-    @JsonProperty
+    @JsonProperty("centerId")
     private String centerId;
-    @JsonProperty
+    @JsonProperty("vaccineType")
     private String vaccineType;
-    @JsonProperty
+    @JsonProperty("citizenId")
     private long citizenId;
 
     @JsonCreator
-    public VaccineBookingRequest(String centerId, String vaccineType, long citizenId) {
+    public VaccineBookingRequest(@JsonProperty("centerId") String centerId,
+                                 @JsonProperty("vaccineType") String vaccineType,
+                                 @JsonProperty("citizenId") long citizenId) {
         this.centerId = centerId;
         this.vaccineType = vaccineType;
         this.citizenId = citizenId;
