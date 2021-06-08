@@ -1,0 +1,56 @@
+version: "3.0"
+module:
+  meta:
+    type: remote
+  spec:
+    endpoints:
+      - endpoint:
+          meta:
+            kind: http
+          spec:
+            functions: com.example/*
+            urlPathTemplate: http://flink-simple-demo-app:1108/
+    ingresses:
+      - ingress:
+          meta:
+            type: io.statefun.kafka/ingress
+            id: example.com/greet
+          spec:
+            address: kafka:9092
+            consumerGroupId: my-group-id
+            topics:
+              - topic: greet-input
+                valueType: com.example/events.GreetMessage
+                targets:
+                  - com.example/greet-fn
+      - ingress:
+          meta:
+            type: io.statefun.kafka/ingress
+            id: example.com/bookingManager
+          spec:
+            address: kafka:9092
+            consumerGroupId: slot-booking-consumer
+            topics:
+              - topic: slot-booking-event
+                valueType: com.example/events.SlotBookingEvent
+                targets:
+                  - com.example/bookingManagerFn
+    egresses:
+      - egress:
+          meta:
+            type: io.statefun.kafka/egress
+            id: com.example/greet-response
+          spec:
+            address: kafka:9092
+            deliverySemantic:
+              type: exactly-once
+              transactionTimeoutMillis: 100000
+      - egress:
+          meta:
+            type: io.statefun.kafka/egress
+            id: com.example/slot-booking-response
+          spec:
+            address: kafka:9092
+            deliverySemantic:
+              type: exactly-once
+              transactionTimeoutMillis: 100000
